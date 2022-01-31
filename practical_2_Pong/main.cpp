@@ -3,8 +3,6 @@
 using namespace sf;
 using namespace std;
 
-sf::RenderWindow window(sf::VideoMode(300, 300), "SFML works!");
-
 const Keyboard::Key controls[4] = {
     Keyboard::A, //Move player 1 up
     Keyboard::Z, //Move player 1 down
@@ -18,11 +16,17 @@ const int gameWidth = 800;
 const int gameHeight = 600;
 const float paddleSpeed = 400.f;
 
+RectangleShape background(sf::Vector2f(gameWidth, gameHeight));
 CircleShape ball;
 RectangleShape paddles[2];
 
 Vector2f ballVelocity;
 bool server = false;
+
+void Reset() {
+    ball.setPosition(Vector2f(gameWidth / 2, gameHeight / 2));
+    ballVelocity = { (server ? 100.0f : -100.0f), 60.0f };
+}
 
 void Load() {
     //Set size and origin of paddles
@@ -32,12 +36,13 @@ void Load() {
     }
     //Set size and origin of ball
     ball.setRadius(ballRadius);
-    ball.setOrigin(Vector2f(gameWidth / 2, gameHeight / 2));
+    ball.setOrigin(Vector2f(ballRadius, -ballRadius));
     paddles[0].setPosition(Vector2(10.f + paddleSize.x / 2.f, gameHeight / 2.f));
-    paddles[1].setPosition(Vector2(10.f + paddleSize.x / 2.f, gameHeight / 2.f));
+    paddles[1].setPosition(Vector2(gameWidth - (10.f + paddleSize.x / 2.f), gameHeight / 2.f));
     //reset ball position
-    ball.setPosition(Vector2f(gameWidth / 2, gameHeight / 2));
-    ballVelocity = { (server ? 100.0f : -100.0f), 60.0f };
+    Reset();
+
+    background.setFillColor(Color::Black);
 }
 
 void Update(RenderWindow &window){
@@ -79,13 +84,16 @@ void Update(RenderWindow &window){
         ballVelocity.y *= -1.1f;
         ball.move(Vector2(0.f, -10.f));
     }
+    else if (bx > gameWidth || bx < 0) {
+        Reset();
+    }
 }
 
 void Render(RenderWindow &window){
 	// Draw everthing
-    for (auto& p : paddles) {
-        window.draw(p);
-    }
+    window.draw(background);
+    window.draw(paddles[0]);
+    window.draw(paddles[1]);
     window.draw(ball);
 }
 
@@ -99,6 +107,7 @@ int main(){
         window.clear();
         Update(window);
         Render(window);
+        window.display();
     }
     return 0;
 }
