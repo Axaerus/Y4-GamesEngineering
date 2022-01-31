@@ -21,6 +21,9 @@ const float paddleSpeed = 400.f;
 CircleShape ball;
 RectangleShape paddles[2];
 
+Vector2f ballVelocity;
+bool server = false;
+
 void Load() {
     //Set size and origin of paddles
     for (auto& p : paddles) {
@@ -34,6 +37,7 @@ void Load() {
     paddles[1].setPosition(Vector2(10.f + paddleSize.x / 2.f, gameHeight / 2.f));
     //reset ball position
     ball.setPosition(Vector2f(gameWidth / 2, gameHeight / 2));
+    ballVelocity = { (server ? 100.0f : -100,0f), 60.0f };
 }
 
 void Update(RenderWindow &window){
@@ -49,7 +53,9 @@ void Update(RenderWindow &window){
         }
     }
 
-    //Quite via ESC key
+    ball.move(ballVelocity * dt);
+
+    //Quit via ESC key
     if (Keyboard::isKeyPressed(Keyboard::Escape)) {
         window.close();
     }
@@ -64,6 +70,15 @@ void Update(RenderWindow &window){
         direction++;
     }
     paddles[0].move(Vector2(0.f, direction * paddleSpeed * dt));
+
+    // check ball collision
+    const float bx = ball.getPosition().x;
+    const float by = ball.getPosition().y;
+    if (by > gameHeight || by < 0) {
+        ballVelocity.x *= 1.1f;
+        ballVelocity.y *= -1.1f;
+        ball.move(Vector2(0.f, -10.f));
+    }
 }
 
 void Render(RenderWindow &window){
