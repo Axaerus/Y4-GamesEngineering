@@ -37,7 +37,7 @@ void Load() {
     paddles[1].setPosition(Vector2(10.f + paddleSize.x / 2.f, gameHeight / 2.f));
     //reset ball position
     ball.setPosition(Vector2f(gameWidth / 2, gameHeight / 2));
-    ballVelocity = { (server ? 100.0f : -100,0f), 60.0f };
+    ballVelocity = { (server ? 100.0f : -100.0f), 60.0f };
 }
 
 void Update(RenderWindow &window){
