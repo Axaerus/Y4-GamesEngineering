@@ -87,6 +87,27 @@ void Update(RenderWindow &window){
     else if (bx > gameWidth || bx < 0) {
         Reset();
     }
+    else if (
+        //ball is inline or behind paddle
+        bx < paddles[0].getPosition().x + (0.5 * paddleSize.x) &&
+        //AND ball is below top edge of paddle
+        by > paddles[0].getPosition().y - (paddleSize.y * 0.5) &&
+        //AND ball is above bottom edge of paddle
+        by < paddles[0].getPosition().y + (paddleSize.y * 0.5)
+        ) {
+        // bounce off left paddle
+        ballVelocity.x *= -1.1f;
+    }
+    else if (//ball is inline or behind paddle
+        bx > paddles[1].getPosition().x - (0.5 * paddleSize.x) &&
+        //AND ball is below top edge of paddle
+        by > paddles[1].getPosition().y - (paddleSize.y * 0.5) &&
+        //AND ball is above bottom edge of paddle
+        by < paddles[1].getPosition().y + (paddleSize.y * 0.5)
+        ) {
+        // bounce off right paddle
+        ballVelocity.x *= -1.1f;
+    }
 }
 
 void Render(RenderWindow &window){
