@@ -67,14 +67,18 @@ void Update(RenderWindow &window){
 
     //handle paddle movement
     float direction = 0.0f;
-    if (Keyboard::isKeyPressed(controls[0])) {
-        direction--;
-    }
+    for (int x = 0; x < sizeof(paddles) / sizeof(*paddles); x++) {
+        if (Keyboard::isKeyPressed(controls[x*2])) {
+            direction--;
+        }
 
-    if (Keyboard::isKeyPressed(controls[1])) {
-        direction++;
+        if (Keyboard::isKeyPressed(controls[x*2+1])) {
+            direction++;
+        }
+        paddles[x].move(Vector2(0.f, direction * paddleSpeed * dt));
+        direction = 0.0f;
     }
-    paddles[0].move(Vector2(0.f, direction * paddleSpeed * dt));
+    
 
     // check ball collision
     const float bx = ball.getPosition().x;
