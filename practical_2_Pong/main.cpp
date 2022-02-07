@@ -22,6 +22,23 @@ RectangleShape paddles[2];
 
 Vector2f ballVelocity;
 bool server = false;
+bool singlePlayer = false;
+
+void TwoPlayerMode(float dt) {
+    //handle paddle movement
+    float direction = 0.0f;
+    for (int x = 0; x < sizeof(paddles) / sizeof(*paddles); x++) {
+        if (Keyboard::isKeyPressed(controls[x * 2])) {
+            direction--;
+        }
+
+        if (Keyboard::isKeyPressed(controls[x * 2 + 1])) {
+            direction++;
+        }
+        paddles[x].move(Vector2(0.f, direction * paddleSpeed * dt));
+        direction = 0.0f;
+    }
+}
 
 void Reset() {
     ball.setPosition(Vector2f(gameWidth / 2, gameHeight / 2));
@@ -65,19 +82,35 @@ void Update(RenderWindow &window){
         window.close();
     }
 
-    //handle paddle movement
-    float direction = 0.0f;
-    for (int x = 0; x < sizeof(paddles) / sizeof(*paddles); x++) {
-        if (Keyboard::isKeyPressed(controls[x*2])) {
-            direction--;
-        }
-
-        if (Keyboard::isKeyPressed(controls[x*2+1])) {
-            direction++;
-        }
-        paddles[x].move(Vector2(0.f, direction * paddleSpeed * dt));
-        direction = 0.0f;
+    if (Keyboard::isKeyPressed(Keyboard::Num1)) {
+        singlePlayer = true;
+        paddles[1].setFillColor(Color::Red);
     }
+    else if (Keyboard::isKeyPressed(Keyboard::Num2)) {
+        singlePlayer = false;
+        paddles[1].setFillColor(Color::White);
+    }
+
+    if (singlePlayer) {
+        // TODO: implement AI function
+    }
+    else {
+        TwoPlayerMode(dt);
+    }
+
+    ////handle paddle movement
+    //float direction = 0.0f;
+    //for (int x = 0; x < sizeof(paddles) / sizeof(*paddles); x++) {
+    //    if (Keyboard::isKeyPressed(controls[x*2])) {
+    //        direction--;
+    //    }
+
+    //    if (Keyboard::isKeyPressed(controls[x*2+1])) {
+    //        direction++;
+    //    }
+    //    paddles[x].move(Vector2(0.f, direction * paddleSpeed * dt));
+    //    direction = 0.0f;
+    //}
     
 
     // check ball collision
