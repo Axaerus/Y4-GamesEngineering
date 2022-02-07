@@ -1,5 +1,17 @@
 #include <SFML/Graphics.hpp>
 
+void Load() {
+    //load method
+}
+
+void Render() {
+    //Render method
+}
+
+void Update() {
+    //Update method
+}
+
 int main(){
   sf::RenderWindow window(sf::VideoMode(300, 300), "SFML works!");
   sf::CircleShape shape(100.f);

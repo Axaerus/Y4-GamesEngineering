@@ -16,6 +16,12 @@ add_subdirectory("lib/sfml")
 set(SFML_INCS "lib/sfml/include")
 link_directories("${CMAKE_BINARY_DIR}/lib/sfml/lib")
 
+add_custom_target(copy_resources ALL COMMAND ${CMAKE_COMMAND} 
+  -E copy_directory
+    "${PROJECT_SOURCE_DIR}/res"
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIGURATION>/res
+)
+
 #### Practical 1 ####
 file(GLOB_RECURSE SOURCES practical_1/*.cpp practical_1/*.h)
 add_executable(PRACTICAL_1 ${SOURCES})
@@ -33,3 +39,8 @@ file(GLOB_RECURSE SOURCES practical_3_invaders/*.cpp 2_invaders/*.h)
 add_executable(PRACTICAL_3_INVADERS ${SOURCES} )
 target_include_directories(PRACTICAL_3_INVADERS SYSTEM PRIVATE ${SFML_INCS})
 target_link_libraries(PRACTICAL_3_INVADERS sfml-graphics)
+add_dependencies(PRACTICAL_3_INVADERS copy_resources)
+set_target_properties(PRACTICAL_3_INVADERS 
+    PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$(Configuration)
+)
