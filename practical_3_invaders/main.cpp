@@ -1,15 +1,17 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "ship.h"
+#include "game.h"
 
 using namespace sf;
 using namespace std;
 
 sf::Texture spritesheet;
 sf::Sprite invader;
+std::vector<Ship*> ships;
 
-sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
+sf::RenderWindow window(sf::VideoMode(gameWidth, gameHeight), "SFML works!");
 sf::RectangleShape shape(sf::Vector2(800.f, 600.0f));
-
 
 void Load() {
     //load method
@@ -20,6 +22,9 @@ void Load() {
     }
     invader.setTexture(spritesheet);
     invader.setTextureRect(IntRect(Vector2(0, 0), Vector2(32, 32)));
+
+    Invader* inv = new Invader(sf::IntRect(Vector2(0, 0), Vector2(32, 32)), { 100,100 });
+    ships.push_back(inv);
 }
 
 void Render() {
@@ -41,10 +46,16 @@ int main(){
   while (window.isOpen()){
       sf::Event event;
       while (window.pollEvent(event)){
-      if (event.type == sf::Event::Closed){
-        window.close();
+        if (event.type == sf::Event::Closed){
+            window.close();
+        }
       }
-    }
+
+      //Quit via ESC key
+      if (Keyboard::isKeyPressed(Keyboard::Escape)) {
+          window.close();
+      }
+
       Render();
     /*window.clear();
     window.draw(shape2);
