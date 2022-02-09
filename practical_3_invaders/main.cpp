@@ -31,12 +31,17 @@ void Render() {
     //Render method
     window.clear();
     window.draw(shape);
-    window.draw(invader);
+    for (const auto s : ships) {
+        window.draw(*s);
+    }
     window.display();
 }
 
-void Update() {
+void Update(float dt) {
     //Update method
+    for (auto& s : ships) {
+        s->Update(dt);
+    };
 }
 
 int main(){
@@ -44,6 +49,10 @@ int main(){
   Load();
 
   while (window.isOpen()){
+      //Reset clock, recalculate deltatime
+      static Clock clock;
+      float dt = clock.restart().asSeconds();
+
       sf::Event event;
       while (window.pollEvent(event)){
         if (event.type == sf::Event::Closed){
@@ -55,7 +64,7 @@ int main(){
       if (Keyboard::isKeyPressed(Keyboard::Escape)) {
           window.close();
       }
-
+      Update(dt);
       Render();
     /*window.clear();
     window.draw(shape2);
