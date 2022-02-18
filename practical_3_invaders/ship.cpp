@@ -12,6 +12,8 @@ Ship::Ship(IntRect ir) : Sprite() {
 	setTextureRect(_sprite);
 };
 
+void Ship::BoundaryShift() {}
+
 void Ship::Update(const float& dt) {}
 
 //Define the ship deconstructor. 
@@ -23,11 +25,15 @@ Ship::~Ship() = default;
 Invader::Invader() : Ship() {}
 
 bool Invader::direction;
-float Invader::speed;
+float Invader::speed = 75;
 
 Invader::Invader(sf::IntRect ir, sf::Vector2f pos) : Ship(ir) {
 	setOrigin(Vector2f(16.f, 16.f));;
 	setPosition(pos);
+}
+
+void Invader::BoundaryShift() {
+	move(Vector2f(0.0f, 24.0f));
 }
 
 void Invader::Update(const float& dt) {
@@ -38,7 +44,7 @@ void Invader::Update(const float& dt) {
 	if ((direction && getPosition().x > gameWidth - 16) || (!direction && getPosition().x < 16)) {
 		direction = !direction;
 		for (int i = 0; i < ships.size(); i++) {
-			ships[i]->move(Vector2f(0.0f, 24.0f));
+			ships[i]->BoundaryShift();
 		}
 	}
 }
@@ -50,10 +56,15 @@ Player::Player() : Ship(IntRect(Vector2(160, 32), Vector2(32, 32))) {
 	setPosition({ gameWidth * .5f, gameHeight - 32.f });
 }
 
+float Player::speed = 175;
+
 void Player::Update(const float& dt) {
 	Ship::Update(dt);
-	//Move left
-	//...
-		//Move Right
-		//...
+	
+	if (Keyboard::isKeyPressed(Keyboard::Left)) {
+		move(Vector2f(-speed * dt, 0));
+	}
+	else if (Keyboard::isKeyPressed(Keyboard::Right)) {
+		move(Vector2f(speed * dt, 0));
+	}
 }

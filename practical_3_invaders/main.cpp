@@ -34,6 +34,8 @@ void Load() {
             ships.push_back(inv);
         }
     }
+    auto player = new Player();
+    ships.push_back(player);
 }
 
 void Render() {
