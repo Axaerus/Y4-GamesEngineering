@@ -12,5 +12,5 @@ protected:
 	void _Update(const float& dt);
 	Bullet();
 	//false=player bullet, true=Enemy bullet
-	bool _mode = false;
+	bool _mode;
 };

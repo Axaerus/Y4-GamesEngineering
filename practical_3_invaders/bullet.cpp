@@ -5,6 +5,8 @@ using namespace std;
 
 Bullet::Bullet() = default;
 
+bool _mode = false;
+
 Bullet::Bullet(const sf::Vector2f& pos, const bool mode) {
 	setPosition(pos);
 	_mode = mode;
