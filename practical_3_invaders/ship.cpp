@@ -15,6 +15,16 @@ Ship::Ship(IntRect ir) : Sprite() {
 
 void Ship::BoundaryShift() {}
 
+bool Ship::is_exploded() const {
+	return _exploded;
+}
+
+//ship.cpp
+void Ship::Explode() {
+	setTextureRect(IntRect(Vector2(128, 32), Vector2(32, 32)));
+	_exploded = true;
+}
+
 void Ship::Update(const float& dt) {}
 
 //Define the ship deconstructor. 
@@ -50,11 +60,10 @@ void Invader::Update(const float& dt) {
 	}
 }
 
-
-
 // --- Player Class ---
 Player::Player() : Ship(IntRect(Vector2(160, 32), Vector2(32, 32))) {
 	setPosition({ gameWidth * .5f, gameHeight - 32.f });
+	Bullet::Init();
 }
 
 float Player::speed = 175;
@@ -72,6 +81,7 @@ void Player::Update(const float& dt) {
 	static vector<Bullet*> bullets;
 	if (Keyboard::isKeyPressed(Keyboard::Space)) {
 		bullets.push_back(new Bullet(getPosition(), false));
+		Bullet::Fire(Player::getPosition(), false);
 	}
 	for (const auto s : bullets) {
 		s->Update(dt);

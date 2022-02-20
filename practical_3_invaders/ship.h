@@ -6,6 +6,7 @@ protected:
     sf::IntRect _sprite;
     //Default constructor is hidden
     Ship();
+    bool _exploded = false;
 public:
     //Constructor that takes a sprite
     explicit Ship(sf::IntRect ir);
@@ -15,6 +16,10 @@ public:
     virtual void BoundaryShift();
     //Update, virtual so can be overridden, but not pure virtual
     virtual void Update(const float& dt);
+    //Check if is exploded
+    bool is_exploded() const;
+    //Explodes ship
+    virtual void Explode();
 };
 
 class Invader : public Ship {

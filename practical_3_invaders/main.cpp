@@ -2,6 +2,7 @@
 #include <iostream>
 #include "ship.h"
 #include "game.h"
+#include "bullet.h"
 
 using namespace sf;
 using namespace std;
@@ -9,6 +10,7 @@ using namespace std;
 sf::Texture spritesheet;
 sf::Sprite invader;
 std::vector<Ship*> ships;
+Player* player;
 
 sf::RenderWindow window(sf::VideoMode(gameWidth, gameHeight), "SFML works!");
 sf::RectangleShape shape(sf::Vector2(800.f, 600.0f));
@@ -34,7 +36,7 @@ void Load() {
             ships.push_back(inv);
         }
     }
-    auto player = new Player();
+    player = new Player();
     ships.push_back(player);
 }
 
@@ -45,6 +47,7 @@ void Render() {
     for (const auto s : ships) {
         window.draw(*s);
     }
+    Bullet::Render(window);
     window.display();
 }
 
