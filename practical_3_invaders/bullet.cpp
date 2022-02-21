@@ -17,6 +17,7 @@ Bullet::Bullet(const sf::Vector2f& pos, const bool mode) {
 };
 
 void Bullet::Update(const float& dt) {
+    //Bullet::bullets.
     for (int i = 0; i < sizeof(bullets) / sizeof(*bullets); i++) {
         bullets[i]._Update(dt);
     }
@@ -46,6 +47,7 @@ void Bullet::Init() {
 void Bullet::_Update(const float& dt) {
     if (getPosition().y < -32 || getPosition().y > gameHeight + 32) {
         //off screen - do nothing
+        setPosition(Vector2f(-100, -100));
         return;
     }
     else {

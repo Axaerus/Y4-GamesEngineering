@@ -67,6 +67,7 @@ Player::Player() : Ship(IntRect(Vector2(160, 32), Vector2(32, 32))) {
 }
 
 float Player::speed = 175;
+bool shouldFire = true;
 
 void Player::Update(const float& dt) {
 	Ship::Update(dt);
@@ -79,12 +80,16 @@ void Player::Update(const float& dt) {
 	}
 
 	static vector<Bullet*> bullets;
-	if (Keyboard::isKeyPressed(Keyboard::Space)) {
+	if (Keyboard::isKeyPressed(Keyboard::Space) && shouldFire) {
 		bullets.push_back(new Bullet(getPosition(), false));
 		Bullet::Fire(Player::getPosition(), false);
+		shouldFire = false;
 	}
-	for (const auto s : bullets) {
-		s->Update(dt);
+	else if (!shouldFire) {
+		if (!Keyboard::isKeyPressed(Keyboard::Space)) {
+			shouldFire = true;
+		}
 	}
+
 }
 

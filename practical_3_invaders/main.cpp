@@ -51,20 +51,20 @@ void Render() {
     window.display();
 }
 
-void Update(float dt) {
+void Update(const float& dt) {
     //Update method
     for (auto& s : ships) {
         s->Update(dt);
     };
+    Bullet::Update(dt);
 }
 
 int main(){
-
+  static Clock clock;
   Load();
 
   while (window.isOpen()){
       //Reset clock, recalculate deltatime
-      static Clock clock;
       float dt = clock.restart().asSeconds();
 
       sf::Event event;
@@ -80,10 +80,6 @@ int main(){
       }
       Update(dt);
       Render();
-    /*window.clear();
-    window.draw(shape2);
-    window.draw(shape);
-    window.display();*/
   }
   return 0;
 }
