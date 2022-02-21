@@ -11,7 +11,7 @@ unsigned char Bullet::bulletPointer;
 
 Bullet::Bullet(const sf::Vector2f& pos, const bool mode) {
     setTexture(spritesheet);
-    setTextureRect(IntRect(Vector2(32, 32), Vector2(64, 64)));
+    setTextureRect(IntRect(Vector2(32, 32), Vector2(32, 64)));
 	setPosition(pos);
 	_mode = mode;
 };
