@@ -36,11 +36,22 @@ target_link_libraries(PRACTICAL_2_PONG sfml-graphics)
 
 ## Space invaders
 file(GLOB_RECURSE SOURCES practical_3_invaders/*.cpp practical_3_invaders/*.h)
-add_executable(PRACTICAL_3_INVADERS ${SOURCES} )
+add_executable(PRACTICAL_3_INVADERS ${SOURCES})
 target_include_directories(PRACTICAL_3_INVADERS SYSTEM PRIVATE ${SFML_INCS})
 target_link_libraries(PRACTICAL_3_INVADERS sfml-graphics)
 add_dependencies(PRACTICAL_3_INVADERS copy_resources)
 set_target_properties(PRACTICAL_3_INVADERS 
+    PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$(Configuration)
+)
+
+## Tile Engine
+file(GLOB_RECURSE SOURCES practical_4_TileEngine/*.cpp practical_4_TileEngine/*.h)
+add_executable(PRACTICAL_4_TILEENGINE ${SOURCES})
+target_include_directories(PRACTICAL_4_TILEENGINE SYSTEM PRIVATE ${SFML_INCS})
+target_link_libraries(PRACTICAL_4_TILEENGINE sfml-graphics)
+add_dependencies(PRACTICAL_4_TILEENGINE copy_resources)
+set_target_properties(PRACTICAL_4_TILEENGINE 
     PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY
     ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$(Configuration)
 )
