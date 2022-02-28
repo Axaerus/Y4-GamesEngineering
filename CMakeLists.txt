@@ -28,6 +28,11 @@ add_library(lib_tile_level_loader STATIC ${SOURCE_FILES})
 target_include_directories(lib_tile_level_loader INTERFACE "${CMAKE_SOURCE_DIR}/lib_tile_level_loader/" )
 target_link_libraries(lib_tile_level_loader sfml-graphics)
 
+# Maths lib
+add_library(lib_maths INTERFACE)
+target_sources(lib_maths INTERFACE "${CMAKE_SOURCE_DIR}/lib_maths/maths.h")
+target_include_directories(lib_maths INTERFACE "${CMAKE_SOURCE_DIR}/lib_maths" SYSTEM INTERFACE ${SFML_INCS})
+
 #### Practical 1 ####
 file(GLOB_RECURSE SOURCES practical_1/*.cpp practical_1/*.h)
 add_executable(PRACTICAL_1 ${SOURCES})
@@ -55,7 +60,7 @@ set_target_properties(PRACTICAL_3_INVADERS
 file(GLOB_RECURSE SOURCES practical_4_TileEngine/*.cpp practical_4_TileEngine/*.h)
 add_executable(PRACTICAL_4_TILEENGINE ${SOURCES})
 target_include_directories(PRACTICAL_4_TILEENGINE SYSTEM PRIVATE ${SFML_INCS})
-target_link_libraries(PRACTICAL_4_TILEENGINE sfml-graphics)
+target_link_libraries(PRACTICAL_4_TILEENGINE lib_tile_level_loader lib_maths sfml-graphics)
 add_dependencies(PRACTICAL_4_TILEENGINE copy_resources)
 set_target_properties(PRACTICAL_4_TILEENGINE 
     PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY

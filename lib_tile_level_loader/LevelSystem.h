@@ -11,14 +11,23 @@ class LevelSystem {
 public:
     enum TILE { EMPTY, START, END, WALL, ENEMY, WAYPOINT };
 
+    //Get Width
+    static size_t getWidth() {
+        return _width;
+    };
+    //Get Height
+    static size_t getHeight() {
+        return _height;
+    };
+
     static void loadLevelFile(const std::string&, float tileSize = 100.f);
     static void Render(sf::RenderWindow& window);
     static sf::Color getColor(TILE t);
     static void setColor(TILE t, sf::Color c);
     //Get Tile at grid coordinate
-    static TILE getTile(/*sf::Vector2ul*/); // TODO: implement later
+    static TILE getTile(sf::Vector2ul); // TODO: implement later to fix error
     //Get Screenspace coordinate of tile
-    static sf::Vector2f getTilePosition(/*sf::Vector2ul*/);
+    static sf::Vector2f getTilePosition(sf::Vector2ul);
     //get the tile at screenspace pos
     static TILE getTileAt(sf::Vector2f);
 
