@@ -1,5 +1,4 @@
 #pragma once
-
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <string>
@@ -17,9 +16,9 @@ public:
     static sf::Color getColor(TILE t);
     static void setColor(TILE t, sf::Color c);
     //Get Tile at grid coordinate
-    static TILE getTile(sf::Vector2ul);
+    static TILE getTile(/*sf::Vector2ul*/); // TODO: implement later
     //Get Screenspace coordinate of tile
-    static sf::Vector2f getTilePosition(sf::Vector2ul);
+    static sf::Vector2f getTilePosition(/*sf::Vector2ul*/);
     //get the tile at screenspace pos
     static TILE getTileAt(sf::Vector2f);
 
