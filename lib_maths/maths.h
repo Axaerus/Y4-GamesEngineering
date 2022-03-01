@@ -4,6 +4,7 @@
 
 #include <SFML/System.hpp>
 #include <cmath>
+#include <math.h>
 #include <iostream>
 #include <vector>
 
