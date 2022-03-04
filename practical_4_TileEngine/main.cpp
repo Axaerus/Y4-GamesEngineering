@@ -7,10 +7,11 @@ using namespace sf;
 using namespace std;
 
 sf::RenderWindow window(sf::VideoMode(800, 600), "Tile Engine Demo");
+std::unique_ptr<Player> player;
 
 void load() {
-	// ...
-		ls::loadLevelFile("res/levels/maze_2.txt");
+	//Load level asset
+	ls::loadLevelFile("res/levels/maze_2.txt");
 
 	// Print the level to the console
 	for (size_t y = 0; y < ls::getHeight(); ++y) {
@@ -19,14 +20,17 @@ void load() {
 		}
 		cout << endl;
 	}
+	player = std::make_unique<Player>();
+	player->setPosition(ls::getStartTilePosition());
 }
 
 void Update(const float& dt) {
-	//ls::
+	player->Update(dt);
 }
 
 void Render(RenderWindow &window) {
 	ls::Render(window);
+	player->Render(window);
 	window.display();
 }
 

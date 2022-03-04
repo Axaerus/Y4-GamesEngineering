@@ -12,8 +12,10 @@ Vector2f LevelSystem::_offset(0.0f, 0.0f);
 
 float LevelSystem::_tileSize(100.f);
 vector<std::unique_ptr<sf::RectangleShape>> LevelSystem::_sprites;
+std::shared_ptr<Vector2f> LevelSystem::_startPos;
+std::shared_ptr<Vector2f> LevelSystem::_endPos;
 
-std::map<LevelSystem::TILE, sf::Color> LevelSystem::_colours{ {WALL, Color::White}, {END, Color::Red} };
+std::map<LevelSystem::TILE, sf::Color> LevelSystem::_colours{ {WALL, Color::White}, {END, Color::Red}, {START, Color::Blue} };
 
 sf::Color LevelSystem::getColor(LevelSystem::TILE t) {
     auto it = _colours.find(t);
@@ -29,6 +31,25 @@ void LevelSystem::setColor(LevelSystem::TILE t, sf::Color c) {
     {
         it->second = c;
     }
+}
+
+LevelSystem::TILE LevelSystem::getTile(Vector2ul p) {
+    if (p.x > _width || p.y > _height) {
+        throw string("Tile out of range: ") + to_string(p.x) + "," + to_string(p.y) + ")";
+    }
+    return _tiles[(p.y * _width) + p.x];
+}
+
+Vector2f LevelSystem::getTilePosition(Vector2ul p) {
+    return (Vector2f(p.x, p.y) * _tileSize);
+}
+
+Vector2f LevelSystem::getStartTilePosition() {
+    return *_startPos;
+}
+
+Vector2f LevelSystem::getEndTilePosition() {
+    return *_endPos;
 }
 
 void LevelSystem::loadLevelFile(const std::string& path, float tileSize) {
@@ -101,19 +122,14 @@ void LevelSystem::buildSprites() {
             s->setSize(Vector2f(_tileSize, _tileSize));
             s->setFillColor(getColor(getTile({ x, y })));
             _sprites.push_back(move(s));
+            if (getTile({ x, y }) == TILE::START) {
+                _startPos = make_shared<Vector2f>(getTilePosition({ x, y }));
+            }
+            if (getTile({ x, y }) == TILE::END) {
+                _endPos = make_shared<Vector2f>(getTilePosition({ x, y }));
+            }
         }
     }
-}
-
-LevelSystem::TILE LevelSystem::getTile(Vector2ul p) {
-    if (p.x > _width || p.y > _height) {
-        throw string("Tile out of range: ") + to_string(p.x) + "," + to_string(p.y) + ")";
-    }
-    return _tiles[(p.y * _width) + p.x];
-}
-
-Vector2f LevelSystem::getTilePosition(Vector2ul p) {
-    return (Vector2f(p.x, p.y) * _tileSize);
 }
 
 void LevelSystem::Render(RenderWindow& window) {

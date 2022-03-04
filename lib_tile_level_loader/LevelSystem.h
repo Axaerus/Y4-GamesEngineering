@@ -31,6 +31,8 @@ public:
     static sf::Vector2f getTilePosition(sf::Vector2ul);
     //get the tile at screenspace pos
     static TILE getTileAt(sf::Vector2f);
+    static sf::Vector2f getStartTilePosition();
+    static sf::Vector2f getEndTilePosition();
 
 protected:
     static std::unique_ptr<TILE[]> _tiles; //Internal array of tiles
@@ -42,6 +44,11 @@ protected:
 
     //array of sfml sprites of each tile
     static std::vector<std::unique_ptr<sf::RectangleShape>> _sprites;
+    
+    //Start and end positions for game logic
+    static std::shared_ptr<sf::Vector2f> _startPos;
+    static std::shared_ptr<sf::Vector2f> _endPos;
+
     //generate the _sprites array
     static void buildSprites();
 

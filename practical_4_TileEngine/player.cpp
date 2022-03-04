@@ -7,10 +7,10 @@ void Player::Update(double dt) {
     
     Vector2f direction = Vector2f(0,0);
     if (Keyboard::isKeyPressed(Keyboard::Left)) {
-        direction.x += -Player::_speed * dt;
+        direction.x -= Player::_speed * dt;
     }
     if (Keyboard::isKeyPressed(Keyboard::Right)) {
-        direction.x -= Player::_speed * dt;
+        direction.x += Player::_speed * dt;
     }
     if (Keyboard::isKeyPressed(Keyboard::Up)) {
         direction.y -= Player::_speed * dt;
