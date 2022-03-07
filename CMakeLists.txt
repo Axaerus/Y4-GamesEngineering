@@ -66,3 +66,14 @@ set_target_properties(PRACTICAL_4_TILEENGINE
     PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY
     ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$(Configuration)
 )
+
+## Pac Man
+file(GLOB_RECURSE SOURCES practical_5_pacman/*.cpp practical_5_pacman/*.h)
+add_executable(PRACTICAL_5_PACMAN ${SOURCES})
+target_include_directories(PRACTICAL_5_PACMAN SYSTEM PRIVATE ${SFML_INCS})
+target_link_libraries(PRACTICAL_5_PACMAN lib_tile_level_loader lib_maths sfml-graphics)
+add_dependencies(PRACTICAL_5_PACMAN copy_resources)
+set_target_properties(PRACTICAL_5_PACMAN 
+    PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$(Configuration)
+)
