@@ -42,7 +42,7 @@ void Render(sf::RenderWindow& window) {
 	window.clear();
 
 	// Render entities
-	em.render(window);
+	em.render();
 	Renderer::render();
 
 	window.display();

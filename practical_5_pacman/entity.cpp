@@ -21,7 +21,7 @@ void EntityManager::update(double dt) {
     }
 }
 
-void EntityManager::render(sf::RenderWindow& window) {
+void EntityManager::render() {
     for (auto item : list) {
         //item->Render(window);
         Renderer::queue(item->getShape());
