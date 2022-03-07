@@ -19,6 +19,8 @@ public:
 	const sf::Vector2f getPosition();
 	void setPosition(const sf::Vector2f& pos);
 	void move(const sf::Vector2f& pos);
+
+	sf::Shape* getShape() { return _shape.get(); } // not keen on this, should it be a weak_ptr from a shared_ptr?
 };
 
 struct EntityManager {

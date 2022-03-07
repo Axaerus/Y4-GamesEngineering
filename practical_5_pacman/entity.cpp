@@ -1,4 +1,5 @@
 #include "entity.h"
+#include "system_renderer.h"
 using namespace std;
 using namespace sf;
 
@@ -22,6 +23,7 @@ void EntityManager::update(double dt) {
 
 void EntityManager::render(sf::RenderWindow& window) {
     for (auto item : list) {
-        item->Render(window);
+        //item->Render(window);
+        Renderer::queue(item->getShape());
     }
 }
