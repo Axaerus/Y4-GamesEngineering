@@ -3,6 +3,8 @@
 #include "ghost.h"
 #include "player.h"
 #include "LevelSystem.h"
+#include "pacman.h"
+#include "scene.h"
 #include "system_renderer.h"
 
 using namespace sf;
@@ -13,44 +15,43 @@ const int gameHeight = 720;
 const int entityCount = 5;
 
 sf::RenderWindow window(sf::VideoMode(gameWidth, gameHeight), "PAC-MAN");
-EntityManager em;
+std::shared_ptr<Scene> gameScene;
+std::shared_ptr<Scene> menuScene;
+std::shared_ptr<Scene> activeScene;
 
+// Main load
 void load() {
 	Renderer::initialise(window);
 
-	//temp list for entity creation
-	std::vector<std::shared_ptr<Entity>> temp;
-	for (int x = 0; x < entityCount; x++) {
-		if (x == 0) {
-			auto temp_player = make_shared<Player>();
-			temp_player->setPosition(Vector2f(temp_player->getDimensions().x, temp_player->getDimensions().y));
-			temp.push_back(temp_player);
-		}
-		auto ghost = make_shared<Ghost>();
-		ghost->setPosition(Vector2f(ghost->getDimensions().x * (x + 1), ghost->getDimensions().y * 2));
-		temp.push_back(ghost);
-	}
-	em.list = temp;
+	menuScene.reset(new MenuScene());	// take ownership of extern
+	gameScene.reset(new GameScene());	// ---
+	menuScene->load();	// Load menu scene
+	gameScene->load();	// Load game scene
+
+	activeScene = menuScene;	// Establish initial scene
 }
 
+// Main update
 void Update(double dt) {
 	// Update entities
-	em.update(dt);
+	activeScene->update(dt); // Updated current scene
 }
 
+// Main render
 void Render(sf::RenderWindow& window) {
-	window.clear();
+	window.clear();	// Clear/flush screen
 
 	// Render entities
-	em.render();
-	Renderer::render();
+	activeScene->render();	// Pushes entities to renderer
+	Renderer::render();		// Renders entities handed over from entity manager
 
-	window.display();
+	window.display();	//	Display the screen
 }
 
+// General shutdown method
 void Shutdown() {
-	Renderer::shutdown();
-	window.close();
+	Renderer::shutdown();	// Flush renderer sprite pool
+	window.close();	// Close window
 }
 
 int main() {

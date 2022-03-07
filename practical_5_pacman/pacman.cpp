@@ -7,9 +7,11 @@
 void Scene::render() { _ents.render(); }
 void Scene::update(double dt) { _ents.update(dt); }
 
-void MenuScene::update(double dt) {
-	Scene::update(dt);
-	text.setString("Almost Pacman");
+void MenuScene::load() {
+	//Set up the text element here!
+	sf::Font font;
+	font.loadFromFile("res/fonts/COOPBL.TTF");
+	text.setFont(font);
 }
 
 void MenuScene::render() {
@@ -17,11 +19,13 @@ void MenuScene::render() {
 	Scene::render();
 }
 
-void MenuScene::load() {
-	//Set up the text element here!
-	sf::Font font;
-	font.loadFromFile("res/fonts/COOPBL.TTF");
-	text.setFont(font)
+void MenuScene::update(double dt) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)) {
+		activeScene = gameScene;
+	}
+	text.setString("Almost Pacman");
+	text.setCharacterSize(24);
+	Scene::update(dt);
 }
 
 void GameScene::load() {
@@ -34,4 +38,16 @@ void GameScene::load() {
 		auto ghost = std::make_unique<Ghost>();
 		_ents.list.push_back(std::move(ghost));
 	}
+}
+
+void GameScene::render() {
+	Renderer::queue(&text);
+	Scene::render();
+}
+
+void GameScene::update(double dt) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)) {
+		activeScene = menuScene;
+	}
+	Scene::update(dt);
 }
