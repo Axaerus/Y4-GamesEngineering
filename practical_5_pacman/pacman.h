@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include "entity.h"
 #include "scene.h"
 
 extern std::shared_ptr<Scene> gameScene;
@@ -21,6 +22,9 @@ class GameScene : public Scene {
 private:
 	sf::Text text;
 	sf::Clock scoreClock;
+	EntityManager _ents;
+	int enemyCount = 4;
+
 	void respawn();
 
 public:
