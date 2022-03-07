@@ -1,25 +1,32 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-//#include "player.h"
+#include "ghost.h"
+#include "player.h"
 #include "LevelSystem.h"
 
 using namespace sf;
 using namespace std;
 
 sf::RenderWindow window(sf::VideoMode(1280, 720), "PAC-MAN");
+std::vector<std::shared_ptr<Entity>> entities;
 
 void load() {
-
+	entities.push_back(make_shared<Player>());
 }
 
-void Update() {
-
+void Update(double dt) {
+	for (auto entity : entities) {
+		entity->Update(dt);
+	}
 }
 
-void Render() {
+void Render(sf::RenderWindow& window) {
 	window.clear();
 
-	// Render
+	// Render entities
+	for (auto entity : entities) {
+		entity->Render(window);
+	}
 
 	window.display();
 }
@@ -40,5 +47,8 @@ int main() {
 		if (Keyboard::isKeyPressed(Keyboard::Escape)) {
 			window.close();
 		}
+
+		Update(dt);
+		Render(window);
 	}
 }
