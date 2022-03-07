@@ -9,7 +9,7 @@ Ghost::Ghost() : _speed(200.0f), Entity(make_unique<CircleShape>(25.f)) {
 }
 
 void Ghost::Update(double dt) {
-
+	Entity::Update(dt);
 }
 
 void Ghost::Render(sf::RenderWindow& window) const {

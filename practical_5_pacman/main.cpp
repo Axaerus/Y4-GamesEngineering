@@ -7,26 +7,40 @@
 using namespace sf;
 using namespace std;
 
-sf::RenderWindow window(sf::VideoMode(1280, 720), "PAC-MAN");
-std::vector<std::shared_ptr<Entity>> entities;
+const int gameWidth = 1280;
+const int gameHeight = 720;
+const int entityCount = 5;
+
+sf::RenderWindow window(sf::VideoMode(gameWidth, gameHeight), "PAC-MAN");
+EntityManager em;
 
 void load() {
-	entities.push_back(make_shared<Player>());
+	//temp list for entity creation
+	std::vector<std::shared_ptr<Entity>> temp;
+	for (int x = 0; x < entityCount; x++) {
+		if (x == 0) {
+			auto temp_player = make_shared<Player>();
+			temp_player->setPosition(Vector2f(temp_player->getDimensions().x, temp_player->getDimensions().y));
+			temp.push_back(temp_player);
+		}
+		auto ghost = make_shared<Ghost>();
+		//cout << ghost->getDimensions().x * (x + 1);
+		//cout << "\n";
+		ghost->setPosition(Vector2f(ghost->getDimensions().x * (x + 1), ghost->getDimensions().y * 2));
+		temp.push_back(ghost);
+	}
+	em.list = temp;
 }
 
 void Update(double dt) {
-	for (auto entity : entities) {
-		entity->Update(dt);
-	}
+	em.update(dt);
 }
 
 void Render(sf::RenderWindow& window) {
 	window.clear();
 
 	// Render entities
-	for (auto entity : entities) {
-		entity->Render(window);
-	}
+	em.render(window);
 
 	window.display();
 }
