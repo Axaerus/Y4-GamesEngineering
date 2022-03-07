@@ -27,6 +27,12 @@ Player::Player() : _speed(200.0f), Entity(make_unique<CircleShape>(25.f)) {
     _shape->setOrigin(Vector2f(25.f, 25.f));
 }
 
+Vector2f Player::getDimensions() {
+    auto temp = _shape->getGlobalBounds();
+    auto next = temp.getSize();
+    return next;
+}
+
 void Player::Render(sf::RenderWindow& window) const {
     window.draw(*_shape);
 }

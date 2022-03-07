@@ -21,7 +21,8 @@ void load() {
 		cout << endl;
 	}
 	player = std::make_unique<Player>();
-	player->setPosition(ls::getStartTilePosition());
+	player->setPosition(ls::getStartTilePosition() + Vector2(player->getDimensions().x, player->getDimensions().y));
+	//cout << player->getDimensions();
 }
 
 void Update(const float& dt) {
@@ -29,6 +30,7 @@ void Update(const float& dt) {
 }
 
 void Render(RenderWindow &window) {
+	window.clear();
 	ls::Render(window);
 	player->Render(window);
 	window.display();
