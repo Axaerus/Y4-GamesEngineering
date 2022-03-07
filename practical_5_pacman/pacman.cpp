@@ -9,8 +9,7 @@ void Scene::update(double dt) { _ents.update(dt); }
 
 void MenuScene::load() {
 	//Set up the text element here!
-	sf::Font font;
-	font.loadFromFile("res/fonts/COOPBL.TTF");
+	font.loadFromFile("res/fonts/COOPBL.ttf");
 	text.setFont(font);
 }
 
