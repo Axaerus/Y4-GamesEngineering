@@ -5,9 +5,34 @@ Entity::Entity() : _components(std::vector<std::shared_ptr<Component>>()), _posi
 _rotation(0), _alive(false), _visible(false), _fordeletion(false)
 {};
 
-void Entity::render() {};
+Entity::~Entity() {
+	if (_fordeletion) {
+		for (auto item : _components) {
+			item = nullptr;
+		}
+	}
+	else {
+		throw "Attempting to delete item that is not marked for deletion!";
+	}
+}
 
-void Entity::update(double dt) {};
+void Entity::render() {
+	if (_visible)
+	{
+		for (auto item : _components) {
+			item->render();
+		}
+	}
+};
+
+void Entity::update(double dt) {
+	if (_alive)
+	{
+		for (auto item : _components) {
+			item->update(dt);
+		}
+	}
+};
 
 const sf::Vector2f& Entity::getPosition() const {
 	return _position;
@@ -49,6 +74,19 @@ void Entity::setVisible(bool IsVisible) {
 	_visible = IsVisible;
 };
 
+// Entity Manager declarations
+void EntityManager::update(double dt) {
+	for (auto item : list) {
+		item->update(dt);
+	}
+}
+
+void EntityManager::render() {
+	for (auto item : list) {
+		item->render();
+	}
+}
+
 // Component class declarations
 Component::Component(Entity* const Parent) : _parent(Parent), _fordeletion(false) {};
 
@@ -60,6 +98,4 @@ void Component::update(double dt) {};
 
 void Component::render() {};
 
-Component::~Component() {
-	
-};
+Component::~Component() {};
