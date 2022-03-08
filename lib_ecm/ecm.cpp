@@ -1,9 +1,13 @@
 #include "ecm.h"
 
 // Entity class declarations
-Entity::Entity() {};
+Entity::Entity() : _components(std::vector<std::shared_ptr<Component>>()), _position(sf::Vector2f(0, 0)), 
+_rotation(0), _alive(false), _visible(false), _fordeletion(false)
+{};
 
 void Entity::render() {};
+
+void Entity::update(double dt) {};
 
 const sf::Vector2f& Entity::getPosition() const {
 	return _position;
@@ -46,7 +50,7 @@ void Entity::setVisible(bool IsVisible) {
 };
 
 // Component class declarations
-Component::Component(Entity* const Parent) : _parent(Parent) {};
+Component::Component(Entity* const Parent) : _parent(Parent), _fordeletion(false) {};
 
 bool Component::is_fordeletion() const {
 	return _fordeletion;
@@ -55,3 +59,7 @@ bool Component::is_fordeletion() const {
 void Component::update(double dt) {};
 
 void Component::render() {};
+
+Component::~Component() {
+	
+};
