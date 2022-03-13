@@ -24,7 +24,6 @@ class GameScene : public Scene {
 private:
 	sf::Text text;
 	sf::Clock scoreClock;
-	int enemyCount = 4;
 
 	void respawn();
 
