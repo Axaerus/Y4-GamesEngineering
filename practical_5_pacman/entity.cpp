@@ -1,3 +1,4 @@
+#if 0
 #include "entity.h"
 #include "system_renderer.h"
 using namespace std;
@@ -27,3 +28,4 @@ void EntityManager::render() {
         Renderer::queue(item->getShape());
     }
 }
+#endif // 0

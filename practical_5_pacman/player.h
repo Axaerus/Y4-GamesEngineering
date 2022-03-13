@@ -1,13 +1,14 @@
 #pragma once
-#include "entity.h"
+#include "ecm.h"
+#include "cmp_sprite.h"
 
 class Player : public Entity {
 private:
 	float _speed;
 
 public:
-	void Update(double dt) override;
+	void update(double dt) override;
 	Player();
-	void Render(sf::RenderWindow& window) const override;
+	void render() override;
 	sf::Vector2f getDimensions();
 };

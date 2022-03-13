@@ -1,5 +1,5 @@
 #pragma once
-#include "Entity.h"
+#include "ecm.h"
 class Scene {
 public:
 	Scene() = default;
@@ -8,6 +8,7 @@ public:
 	virtual void update(double dt);
 	virtual void render();
 	virtual void load() = 0;
+	virtual void shutdown();
 	std::vector<std::shared_ptr<Entity>>& getEnts();
 
 protected:

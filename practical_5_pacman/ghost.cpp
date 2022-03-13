@@ -3,19 +3,19 @@
 using namespace sf;
 using namespace std;
 
-Ghost::Ghost() : _speed(200.0f), Entity(make_unique<CircleShape>(25.f)) {
-	_shape->setFillColor(Color::Red);
-	_shape->setOrigin(Vector2f(25.f, 25.f));
+Ghost::Ghost() : _speed(200.0f), Entity() {
+	/*_shape->setFillColor(Color::Red);
+	_shape->setOrigin(Vector2f(25.f, 25.f));*/
 }
 
-void Ghost::Update(double dt) {
-	Entity::Update(dt);
+void Ghost::update(double dt) {
+	Entity::update(dt);
 }
 
-void Ghost::Render(sf::RenderWindow& window) const {
-	window.draw(*_shape);
+void Ghost::render() {
+	/*window.draw(*_shape);*/
 }
 
 Vector2f Ghost::getDimensions() {
-	return _shape->getGlobalBounds().getSize();
+	return Vector2f(0.0f, 0.0f);/*_shape->getGlobalBounds().getSize();*/
 }

@@ -1,3 +1,4 @@
+#if 0
 #pragma once
 
 #include <SFML/Graphics.hpp>
@@ -28,3 +29,4 @@ struct EntityManager {
 	void update(double dt);
 	void render();
 };
+#endif // 0

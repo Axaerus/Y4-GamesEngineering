@@ -28,7 +28,7 @@ void load() {
 	menuScene->load();	// Load menu scene
 	gameScene->load();	// Load game scene
 
-	activeScene = menuScene;	// Establish initial scene
+	activeScene = gameScene;	// Establish initial scene
 }
 
 // Main update
@@ -50,6 +50,7 @@ void Render(sf::RenderWindow& window) {
 
 // General shutdown method
 void Shutdown() {
+	activeScene->shutdown();
 	Renderer::shutdown();	// Flush renderer sprite pool
 	window.close();	// Close window
 }

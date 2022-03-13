@@ -1,7 +1,8 @@
 #pragma once
 #include <memory>
-#include "entity.h"
+#include "ecm.h"
 #include "scene.h"
+#include <SFML/Graphics.hpp>
 
 extern std::shared_ptr<Scene> gameScene;
 extern std::shared_ptr<Scene> menuScene;
@@ -23,7 +24,6 @@ class GameScene : public Scene {
 private:
 	sf::Text text;
 	sf::Clock scoreClock;
-	EntityManager _ents;
 	int enemyCount = 4;
 
 	void respawn();

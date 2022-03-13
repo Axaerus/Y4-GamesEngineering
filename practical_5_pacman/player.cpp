@@ -2,10 +2,10 @@
 using namespace sf;
 using namespace std;
 
-void Player::Update(double dt) {
+void Player::update(double dt) {
     //Move in four directions based on 
     
-    Vector2f direction = Vector2f(0,0);
+    /*Vector2f direction = Vector2f(0,0);
     if (Keyboard::isKeyPressed(Keyboard::Left)) {
         direction.x -= Player::_speed * dt;
     }
@@ -18,21 +18,21 @@ void Player::Update(double dt) {
     if (Keyboard::isKeyPressed(Keyboard::Down)) {
         direction.y += Player::_speed * dt;
     }
-    move(direction);
-    Entity::Update(dt);
+    move(direction);*/
+    Entity::update(dt);
 }
 
-Player::Player() : _speed(200.0f), Entity(make_unique<CircleShape>(25.f)) {
-    _shape->setFillColor(Color::Yellow);
-    _shape->setOrigin(Vector2f(25.f, 25.f));
+Player::Player() : _speed(200.0f), Entity() {
+    /*_shape->setFillColor(Color::Yellow);
+    _shape->setOrigin(Vector2f(25.f, 25.f));*/
 }
 
 Vector2f Player::getDimensions() {
-    auto temp = _shape->getGlobalBounds();
-    auto next = temp.getSize();
-    return next;
+    /*auto temp = _shape->getGlobalBounds();
+    auto next = temp.getSize();*/
+    return Vector2(0.0f,0.0f);
 }
 
-void Player::Render(sf::RenderWindow& window) const {
-    window.draw(*_shape);
+void Player::render() {
+    /*window.draw(*_shape);*/
 }
