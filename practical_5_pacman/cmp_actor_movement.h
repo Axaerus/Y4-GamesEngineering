@@ -1,9 +1,10 @@
 #pragma once
 #include <ecm.h>
+#include <LevelSystem.h>
 
 class ActorMovementComponent : public Component {
 protected:
-    //bool validMove(const sf::Vector2f&);
+    bool validMove(const sf::Vector2f&);
     float _speed;
 
 public:
@@ -30,4 +31,9 @@ class EnemyAIComponent : public ActorMovementComponent {
 public:
     EnemyAIComponent(Entity* p);
     void update(double dt);
+
+protected:
+    sf::Vector2f _direction;
+    enum state { ROAMING, ROTATING, ROTATED };
+    state _state;
 };

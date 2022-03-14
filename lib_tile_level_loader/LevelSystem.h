@@ -26,7 +26,8 @@ public:
     static sf::Color getColor(TILE t);
     static void setColor(TILE t, sf::Color c);
     //Get Tile at grid coordinate
-    static TILE getTile(sf::Vector2ul); // TODO: implement later to fix error
+    static TILE getTile(sf::Vector2ul); 
+    static std::vector<sf::Vector2ul> findTiles(TILE Tile);
     //Get Screenspace coordinate of tile
     static sf::Vector2f getTilePosition(sf::Vector2ul);
     //get the tile at screenspace pos

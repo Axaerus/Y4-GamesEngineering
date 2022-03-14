@@ -6,6 +6,8 @@
 #include "system_renderer.h"
 
 #define GHOSTS_COUNT 4
+#define CHAR_SIZING 12.f
+#define GAME_SIZE 25.f
 
 using namespace sf;
 using namespace std;
@@ -51,11 +53,12 @@ void GameScene::load() {
 	//	auto ghost = std::make_unique<Ghost>();
 	//	_ents.list.push_back(std::move(ghost));
 	//}
+	ls::loadLevelFile("res/levels/pacman.txt", GAME_SIZE);
 	{
 		auto pl = make_shared<Entity>();
 
 		auto s = pl->addComponent<ShapeComponent>();
-		s->setShape<sf::CircleShape>(12.f);
+		s->setShape<sf::CircleShape>(CHAR_SIZING);
 		s->getShape().setFillColor(Color::Yellow);
 		s->getShape().setOrigin(Vector2f(12.f, 12.f));
 
@@ -66,6 +69,7 @@ void GameScene::load() {
 		pl->setPosition(Vector2f(12, 12));
 
 		_ents.list.push_back(pl);
+		player = pl;
 	}
 
 	const sf::Color ghost_cols[]{ {208, 62, 25},    // red Blinky
@@ -77,7 +81,7 @@ void GameScene::load() {
 		auto ghost = make_shared<Entity>();
 
 		auto s = ghost->addComponent<ShapeComponent>();
-		s->setShape<sf::CircleShape>(12.f);
+		s->setShape<sf::CircleShape>(CHAR_SIZING);
 		s->getShape().setFillColor(ghost_cols[i % 4]);
 		s->getShape().setOrigin(Vector2f(12.f, 12.f));
 
@@ -88,12 +92,34 @@ void GameScene::load() {
 		ghost->setPosition(Vector2f(24 * i + 12, 36));
 
 		_ents.list.push_back(ghost);
+		ghosts.push_back(ghost);
 	}
+	respawn();
 }
 
 void GameScene::render() {
+	ls::Render(Renderer::getWindow());
 	Renderer::queue(&text);
 	Scene::render();
+}
+
+void GameScene::respawn() {
+	if (!player->isAlive()) {
+		player->setAlive(true);
+	}
+	player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]) + Vector2f(CHAR_SIZING, CHAR_SIZING));
+	player->getCompatibleComponent<ActorMovementComponent>()[0]
+		->setSpeed(150.f);
+
+	auto ghost_spawns = ls::findTiles(ls::ENEMY);
+	for (auto& g : ghosts) {
+		if (!g->isAlive()) {
+			g->setAlive(true);
+		}
+		g->setPosition(
+			ls::getTilePosition(ghost_spawns[rand() % ghost_spawns.size()]) + Vector2f(CHAR_SIZING, CHAR_SIZING));
+		g->getCompatibleComponent<ActorMovementComponent>()[0]->setSpeed(100.0f);
+	}
 }
 
 void GameScene::update(double dt) {

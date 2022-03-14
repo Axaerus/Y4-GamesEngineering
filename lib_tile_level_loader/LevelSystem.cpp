@@ -40,6 +40,25 @@ LevelSystem::TILE LevelSystem::getTile(Vector2ul p) {
     return _tiles[(p.y * _width) + p.x];
 }
 
+LevelSystem::TILE LevelSystem::getTileAt(Vector2f loc) {
+    size_t ecks = floor(loc.x) / _tileSize;
+    size_t ouaie = floor(loc.y) / _tileSize;
+    return getTile({ ecks, ouaie });
+}
+
+std::vector<sf::Vector2ul> LevelSystem::findTiles(LevelSystem::TILE Tile) {
+    std::vector<sf::Vector2ul> list;
+    for (size_t x = 0; x < _width; x++) {
+        for (size_t y = 0; y < _height; y++) {
+            auto tile = getTile({ x, y });
+            if (tile == Tile) {
+                list.push_back({ x, y });
+            }
+        }
+    }
+    return list;
+}
+
 Vector2f LevelSystem::getTilePosition(Vector2ul p) {
     return (Vector2f(p.x, p.y) * _tileSize);
 }
