@@ -1,6 +1,8 @@
 #pragma once
 #include <memory>
 #include "ecm.h"
+#include "cmp_actor_movement.h"
+#include "cmp_sprite.h"
 #include "scene.h"
 #include <SFML/Graphics.hpp>
 

@@ -58,6 +58,8 @@ void GameScene::load() {
 		s->setShape<sf::CircleShape>(12.f);
 		s->getShape().setFillColor(Color::Yellow);
 		s->getShape().setOrigin(Vector2f(12.f, 12.f));
+
+		pl->addComponent<PlayerMovementComponent>();
 		
 		pl->setAlive(true);
 		pl->setVisible(true);
@@ -73,10 +75,13 @@ void GameScene::load() {
 
 	for (int i = 0; i < GHOSTS_COUNT; ++i) {
 		auto ghost = make_shared<Entity>();
+
 		auto s = ghost->addComponent<ShapeComponent>();
 		s->setShape<sf::CircleShape>(12.f);
 		s->getShape().setFillColor(ghost_cols[i % 4]);
 		s->getShape().setOrigin(Vector2f(12.f, 12.f));
+
+		ghost->addComponent<EnemyAIComponent>();
 
 		ghost->setAlive(true);
 		ghost->setVisible(true);

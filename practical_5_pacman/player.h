@@ -1,6 +1,5 @@
 #pragma once
 #include "ecm.h"
-#include "cmp_sprite.h"
 
 class Player : public Entity {
 private:
