@@ -60,7 +60,7 @@ void PlayerMovementComponent::update(double dt) {
 static const Vector2i directions[] = { {1, 0}, {0, 1}, {0, -1}, {-1, 0} };
 
 EnemyAIComponent::EnemyAIComponent(Entity* p)
-    : ActorMovementComponent(p) {}
+    : ActorMovementComponent(p), _state(EnemyAIComponent::ROAMING), _direction(directions[(rand() % 4)]) {}
 
 void EnemyAIComponent::update(double dt) {
     //amount to move
@@ -80,20 +80,23 @@ void EnemyAIComponent::update(double dt) {
         if (LevelSystem::getTileAt(newpos) == LevelSystem::WALL || LevelSystem::getTileAt(newpos) == LevelSystem::WAYPOINT)// Wall in front or at waypoint
         {
             // start rotate
+            _state = ROTATING;
         }
         else {
             //keep moving
+            move(_direction * mva);
         }
-        break;
+        break;  
 
     case ROTATING:
-        while (true
+        while (
             // Don't reverse
-            
+            newdir == baddir
             // and Don't pick a direction that will lead to a wall
-            
+            || LevelSystem::getTileAt(pos + ((Vector2f)newdir * mva)) == LevelSystem::WALL
             ) {
             // pick new direction
+            newdir = directions[(rand() % 4)];
         }
         _direction = Vector2f(newdir);
         _state = ROTATED;

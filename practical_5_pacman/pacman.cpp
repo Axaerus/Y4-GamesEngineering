@@ -1,7 +1,5 @@
 #include "ecm.h"
-#include "ghost.h"
 #include "pacman.h"
-#include "player.h"
 #include "scene.h"
 #include "system_renderer.h"
 
@@ -107,6 +105,9 @@ void GameScene::respawn() {
 	if (!player->isAlive()) {
 		player->setAlive(true);
 	}
+	if (!player->isVisible()) {
+		player->setVisible(true);
+	}
 	player->setPosition(ls::getTilePosition(ls::findTiles(ls::START)[0]) + Vector2f(CHAR_SIZING, CHAR_SIZING));
 	player->getCompatibleComponent<ActorMovementComponent>()[0]
 		->setSpeed(150.f);
@@ -115,6 +116,9 @@ void GameScene::respawn() {
 	for (auto& g : ghosts) {
 		if (!g->isAlive()) {
 			g->setAlive(true);
+		}
+		if (!g->isVisible()) {
+			g->setVisible(true);
 		}
 		g->setPosition(
 			ls::getTilePosition(ghost_spawns[rand() % ghost_spawns.size()]) + Vector2f(CHAR_SIZING, CHAR_SIZING));
