@@ -105,7 +105,7 @@ void init() {
 	for (int i = 0; i < 7; i += 2) {
 		// Create SFML shapes for each wall
 		/*auto s = std::make_unique<RectangleShape>();
-		s->setPosition(walls[i]);
+		s->setPosition();
 		s->setSize();
 		sprites.push_back(s);*/
 		// Create a static physics body for the wall
