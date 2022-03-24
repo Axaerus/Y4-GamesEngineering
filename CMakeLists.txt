@@ -17,7 +17,7 @@ set(OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/")
 # Ouput all DLLs from all libs into main build folder
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY})
 
-add_custom_target(copy_resources ALL COMMAND ${CMAKE_COMMAND} 
+add_custom_target(copy_resources ALL COMMAND ${CMAKE_COMMAND}
   -E copy_directory
     "${PROJECT_SOURCE_DIR}/res"
     ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIGURATION>/res
@@ -67,9 +67,9 @@ target_link_libraries(lib_ecm PRIVATE lib_maths)
 #@@@-
 
 ## 6 - Platformer
-file(GLOB_RECURSE SOURCES lab_7_platformer/*.cpp practical_6_platformer/*.h)
-file(GLOB_RECURSE CMPNTS lab_7_platformer/components/*.cpp practical_6_platformer/components/*.h)
-file(GLOB_RECURSE SCENES lab_7_platformer/scenes/*.cpp practical_6_platformer/scenes/*.h)
+file(GLOB_RECURSE SOURCES lab_7_platformer/*.cpp lab_7_platformer/*.h)
+file(GLOB_RECURSE CMPNTS lab_7_platformer/components/*.cpp lab_7_platformer/components/*.h)
+file(GLOB_RECURSE SCENES lab_7_platformer/scenes/*.cpp lab_7_platformer/scenes/*.h)
 add_executable(PRACTICAL_7_PLATFORMER ${SOURCES} ${RESOURCE_FILES})
 source_group("components" FILES ${CMPNTS})
 source_group("resources" FILES ${RESOURCE_FILES})
@@ -79,7 +79,7 @@ set(EXECUTABLES ${EXECUTABLES} PRACTICAL_7_PLATFORMER)
 
 add_dependencies(PRACTICAL_7_PLATFORMER copy_resources)
 
-set_target_properties(PRACTICAL_7_PLATFORMER 
+set_target_properties(PRACTICAL_7_PLATFORMER
     PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY
     ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$(Configuration)
 )
